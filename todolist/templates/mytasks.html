@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}
+  MyTasks Page
+{% endblock %}
+
+{% block content %}     
+  <div style="margin-top: 50px" class="container"><h1>Todo App</h1></div>
+  
+  
+  <form action="/add" method="post">    
+    <div class="container input-group mb-3">  
+      <span class="input-group-text">Todo Title</span>
+      <input type="text" class="form-control" name="title" placeholder="Enter Todo..." aria-label="Enter Todo..." aria-describedby="button-addon2">
+      <input class="form-control" id="party" type="datetime-local" name="date" value="" />
+      <button type="submit" class="btn btn-light" id="button-addon2">Add</button>
+    </div>
+  </form>  
+  {% for todo in todo_list %}
+  <div class="container">
+    <p class="list-group list-group-flush">
+      {% if todo.complete == True %}
+        <p class="list-group list-group-flush" ><del>{{ todo.id}} | {{todo.title}} | {{todo.date}} </del></p>
+      {% else %}
+        {{ todo.id}} | {{todo.title}} | {{todo.date}}
+      {% endif %}
+    </p>    
+
+    {% if todo.complete == False %}
+    <span class="btn btn-outline-secondary">Not Completed</span>
+    {% else %}
+    <span class="btn btn-outline-success">Completed</span>  
+    {% endif %}       
+
+    <a class="btn btn-success" href="/update/{{ todo.id}}">Update</a>
+    <a class="btn btn-danger" href="/delete/{{ todo.id}}">Delete</a>
+  </div>  
+  {% endfor %}
+
+
+{% endblock %}    
